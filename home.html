@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+    <h4 align="center">Your To-Do List</h4>
+
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{ m }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if list_items %}
+
+        <table class="table">
+            {% for todo in list_items %}
+                {% if todo.complete %}
+                    <tr class="table-success">
+                        <td class="striker"><center><a href="{% url 'edit' todo.id %}">{{todo.item_name}}</a></center> </td>
+                        <td><center><a href="{% url 'uncross' todo.id %}">Uncross</a></center></td>
+                        <td><center><a href="{% url 'delete' todo.id %}">Delete</a></center></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td><center><a href="{% url 'edit' todo.id %}">{{todo.item_name}}</a></center> </td>
+                        <td><center><a href="{% url 'cross_off' todo.id %}">Cross Off</a></center></td>
+                        <td><center><a href="{% url 'delete' todo.id %}">Delete</a></center></td>
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+        </table>
+
+    {% endif %}
+
+{% endblock %}
